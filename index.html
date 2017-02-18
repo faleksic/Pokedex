@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<!-- My css -->
+	<link rel="stylesheet" href="css/pokedex.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<!-- Roboto font -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	
+	<!-- Seymour one font -->
+	<link href="https://fonts.googleapis.com/css?family=Seymour+One" rel="stylesheet">
+	
+	<!-- My javascript -->
+	<script src="js/pokedex.js"></script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Pokedex</title>
+</head>
+
+<body onload="getPokemons(); changeActive();">
+<!-- navigation -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+		<a class="navbar-brand" href="#">
+			<img src="img/pokedex-logo.png" alt="Logo">
+		</a>
+	</div>
+	<ul class="nav navbar-nav">
+      <li class="active"><a href="#pokemon_list">Pokemon list</a></li>
+      <li><a href="#my_pokemon">My pokemon</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="container">
+	<!-- List of all pokemons -->
+	<div id="pokemon_list">
+		<h1>Pokemon list</h1>
+		<table class="table table-bordered table-hover table-responsive" id="pokemons">
+			<tr>
+				<th>#</th>
+				<th>Pokemon name</th>
+			</tr>
+		</table>
+		<button class="btn btn-info"  type="button" id="prev">Previous</button>
+		<button class="btn btn-info" type="button" id="next">Next</button>
+	</div>
+	
+	<!-- Details about some pokemon -->
+	<div id="pokemon_details" hidden>
+		<h1>Pokemon details</h1>
+		<dl class="dl-horizontal">
+		  <dt>ID</dt>
+		  <dd id="id"></dd>
+		  <dt>Name</dt>
+		  <dd id="name"></dd>
+		  <dt>Height</dt>
+		  <dd id="height"></dd>
+		  <dt>Weight</dt>
+		  <dd id="weight"></dd>
+		  <dt>Abilities</dt>
+		  <dd><ul id="abilities" class="list-unstyled"></ul></dd>
+		  <dt>Images</dt>
+		  <dd><ul id="sprites" class="list-unstyled"></ul></dd>
+		  <dt>Stats</dt>
+		  <dd><ul id="stats" class="list-unstyled"></ul></dd>
+		  <dt>Types</dt>
+		   <dd><ul id="types" class="list-unstyled"></ul></dd>
+		</dl>	
+	</div>
+	
+	<div id="my_pokemon" hidden>
+		asdasdasd
+	</div>
+</div>
+</body>
+
+</html>

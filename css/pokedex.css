@@ -1,0 +1,52 @@
+body{
+	font-family: 'Roboto';
+	sans-serif;
+	margin-bottom: 2%;
+	padding-top: 70px;
+}
+
+table {
+	text-align: center;
+	background-color: #f1c40f;
+}
+
+th{
+	text-align: center;
+	background-color: #34495e;
+	color: #fff;
+}
+
+dd{
+	margin-bottom: 10px;
+	color:  #34495e;
+}
+
+dt{
+	color: #f1c40f;
+}
+
+h1 {
+	font-family: 'Seymour One', sans-serif;
+    color: #f1c40f;
+    -webkit-text-stroke-width: 3px;
+	-webkit-text-stroke-color: #34495e;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.navbar-default {
+    background-color: #c0392b;
+}
+
+.navbar-default .navbar-nav > li > a {
+   color: #fff;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active >   
+ a:hover, .navbar-default .navbar-nav > .active > a:focus {
+color: white; /*BACKGROUND color for active*/
+background-color: #34495e;
+}
