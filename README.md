@@ -1,0 +1,2 @@
+# Pokedex
+Infinum zadatak
