@@ -157,6 +157,7 @@ function addToMyPokemon(pokemon){
 			return; 
 		getPokemonDetails(e.data.value);
 	});
+	$("td").last().css("cursor", "pointer");
 	//on image click remove pokemon
 	$("td img").last().on("click", {value: pokemon.name}, function(e){removeMyPokemon($($(this).parent()).parent(), e.data.value);});
 	$(".alert").remove();
