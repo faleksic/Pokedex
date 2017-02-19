@@ -38,11 +38,14 @@ function getPokemons(url="http://pokeapi.co/api/v2/pokemon/"){
 		for(var i=0; i<data.results.length; i++){
 			$("#pokemons").append("<tr> <td> "+ getPokemonId(data.results[i].url) +
 			" </td> <td> " + firstLetterUpper(data.results[i].name) + "<img src='img/pokeball.png' alt='pokeball' ></td>");
+			$("td").last().css("cursor", "pointer");
+			//listener on click that calls getPokemonDetails function if clicked on row
 			$("td").last().on("click", {value: data.results[i].url}, function(e){
 				if(e.target !== e.currentTarget)
 					return; 
 				getPokemonDetails(e.data.value);
 			});
+			//image listener to add element to my pokemon list
 			$("td img").last().on("click",{value: data.results[i]}, function(e){addToMyPokemon(e.data.value);});
 		}
 	});
@@ -59,9 +62,11 @@ function getPokemonId(url){
 }
 
 function getPokemonDetails(url){
+	//get all dd elements that don't have ul child and set ul to empty string
 	for(var i=0; i<$("dd:not(:has(ul))").length; i++){
 		 $("dd:not(:has(ul))")[i].innerText = "";
 	}
+	//get all dd elements that have ul child and set ul to empty string
 	for(var i=0; i<$("dd > ul").length; i++){
 		 $("dd > ul")[i].innerText = "";
 	}
@@ -69,6 +74,7 @@ function getPokemonDetails(url){
 	$("#pokemon_list").hide();
 	$("#my_pokemon").hide();
 	
+	//get some pokemon data and set the values
 	$.get(url).done( function(data){
 		$("#id").text(data.id);
 		$("#name").text(firstLetterUpper(data.name));
@@ -103,43 +109,72 @@ function changeActive(){
 		$(this).parent().addClass("active");
 		//hide all divs with data
 		$(".container").children().hide();
+		//check is there any pokemons in my pokemon list
+		//if not show image, else shows table
+		if($(this).attr("href") === "#my_pokemon"){
+			if($("#my_pokemons tbody").children().length < 2){
+				$("#found").css("display", "none");				
+				$("#not_found").css("display", "inline");				
+			}
+			else{
+				$("#found").css("display", "inline");				
+				$("#not_found").css("display", "none");
+			}
+		}
 		//reads href attribute of given <a> element
 		//and finds element with that id and slide it down
 		$($(this).attr("href")).slideDown();
+		if($(".alert").length>0)
+			$(".alert").remove();
 	});
-	
+	//set top padding on navigation height when window is ready
 	$( window ).ready(function() {
 		$("body").css("padding-top", $("nav").height());
 	});
+	//set top padding on navigation height when window is resized
 	$( window ).resize(function() {
 		$("body").css("padding-top", $("nav").height());
 	});
 }
 
+//add to my pokemon list
 function addToMyPokemon(pokemon){
+	//check is that pokemon already in the list
 	var cells= $("#my_pokemons td:has(img)");
 	for(var i=0; i<cells.length; i++){
 		if(cells[i].innerText == firstLetterUpper(pokemon.name)){
-			$(".alert").hide();
+			$(".alert").remove();
 			$($("h1").first()).after("<div class='alert alert-danger'>You have already caught that pokemon</div>");
 			return;
 		}
 	}
-	
+	//add pokemon to my pokemon list
 	$("#my_pokemons").append("<tr> <td> "+ getPokemonId(pokemon.url) +
 	" </td> <td>" + firstLetterUpper(pokemon.name) + "<img src='img/pokeball-open.png' alt='pokeball open' ></td>");
+	//on row click get pokemon details
 	$("td").last().on("click", {value: pokemon.url}, function(e){
 		if(e.target !== e.currentTarget)
 			return; 
 		getPokemonDetails(e.data.value);
 	});
+	//on image click remove pokemon
 	$("td img").last().on("click", {value: pokemon.name}, function(e){removeMyPokemon($($(this).parent()).parent(), e.data.value);});
-	$(".alert").hide();
+	$(".alert").remove();
 	$($("h1").first()).after("<div class='alert alert-success'>You have caught "+ firstLetterUpper(pokemon.name) +"!</div>");
 }
 
+//removes pokemon from my pokemon list
 function removeMyPokemon(row, name){
 	row.remove();
-	$(".alert").hide();
+	$(".alert").remove();
 	$($("h1").last()).after("<div class='alert alert-success'>You have released " + firstLetterUpper(name) + " </div>");
+	//if there aren't any rows in the list shows the image after 2 seconds
+	if($("#my_pokemons tbody").children().length < 2){
+		setTimeout(function(){
+			$("#found").css("display", "none");				
+			$("#not_found").css("display", "inline");
+			$("#not_found").css("display", "inline");
+		}
+		, 2000);
+	}	
 }

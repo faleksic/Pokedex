@@ -30,17 +30,19 @@
 <body onload="getPokemons(); changeActive();">
 <!-- navigation -->
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-		<a class="navbar-brand" href="#">
+	<div class="container-fluid">
+	<!-- logo picture -->
+	<div class="navbar-header">
+		<a class="navbar-brand">
 			<img src="img/pokedex-logo.png" alt="Logo">
 		</a>
 	</div>
+	<!-- two links to all pokemons and my pokemons -->
 	<ul class="nav navbar-nav">
-      <li class="active"><a href="#pokemon_list">Pokemon list</a></li>
-      <li><a href="#my_pokemon">My pokemon</a></li>
-    </ul>
-  </div>
+		<li class="active"><a href="#pokemon_list">Pokemon list</a></li>
+		<li><a href="#my_pokemon">My pokemon</a></li>
+	</ul>
+	</div>
 </nav>
 
 
@@ -61,34 +63,46 @@
 	<!-- Details about some pokemon -->
 	<div id="pokemon_details" hidden>
 		<h1>Pokemon details</h1>
-		<dl class="dl-horizontal">
-		  <dt>ID</dt>
-		  <dd id="id"></dd>
-		  <dt>Name</dt>
-		  <dd id="name"></dd>
-		  <dt>Height</dt>
-		  <dd id="height"></dd>
-		  <dt>Weight</dt>
-		  <dd id="weight"></dd>
-		  <dt>Abilities</dt>
-		  <dd><ul id="abilities" class="list-unstyled"></ul></dd>
-		  <dt>Images</dt>
-		  <dd><ul id="sprites" class="list-unstyled"></ul></dd>
-		  <dt>Stats</dt>
-		  <dd><ul id="stats" class="list-unstyled"></ul></dd>
-		  <dt>Types</dt>
-		   <dd><ul id="types" class="list-unstyled"></ul></dd>
-		</dl>	
+		<dl>
+		<div class="col-md-6 col-sm-4">
+			<dt>ID</dt>
+			<dd id="id"></dd>
+			<dt>Name</dt>
+			<dd id="name"></dd>
+			<dt>Height</dt>
+			<dd id="height"></dd>
+			<dt>Weight</dt>
+			<dd id="weight"></dd>
+			<dt>Abilities</dt>
+			<dd><ul id="abilities" class="list-unstyled"></ul></dd>
+			<dt>Images</dt>
+			<dd><ul id="sprites" class="list-unstyled"></ul></dd>
+		</div>
+		<div class="col-md-6 col-sm-4">
+			<dt>Stats</dt>
+			<dd><ul id="stats" class="list-unstyled"></ul></dd>
+			<dt>Types</dt>
+			<dd><ul id="types" class="list-unstyled"></ul></dd>
+		</div>
+		</dl>
 	</div>
 	
+	<!-- my pokemons -->
 	<div id="my_pokemon" hidden>
-		<h1>My pokemons</h1>
-		<table class="table table-bordered table-hover table-responsive " id="my_pokemons">
-			<tr>
-				<th>#</th>
-				<th>Pokemon name</th>
-			</tr>
-		</table>
+		<!-- not found shows not found image -->
+		<div id="not_found">
+			<img src="img/not-found.png" alt="not found">
+		</div>
+		<!-- found shows the table -->
+		<div id="found">
+			<h1>My pokemons</h1>
+			<table class="table table-bordered table-hover table-responsive " id="my_pokemons">
+				<tr>
+					<th>#</th>
+					<th>Pokemon name</th>
+				</tr>
+			</table>
+		</div>
 	</div>
 </div>
 </body>
