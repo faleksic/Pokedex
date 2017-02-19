@@ -36,8 +36,14 @@ function getPokemons(url="http://pokeapi.co/api/v2/pokemon/"){
 		$("#pokemons tr").slice(1).remove();
 		//append data to table and add click listener to every row
 		for(var i=0; i<data.results.length; i++){
-			$("#pokemons").append("<tr> <td> "+ getPokemonId(data.results[i].url) +" </td> <td> " + firstLetterUpper(data.results[i].name) + " </td> </tr>");
-			$("tr").last().on("click", {value: data.results[i].url}, function(e){getPokemonDetails(e.data.value)});
+			$("#pokemons").append("<tr> <td> "+ getPokemonId(data.results[i].url) +
+			" </td> <td> " + firstLetterUpper(data.results[i].name) + "<img src='img/pokeball.png' alt='pokeball' ></td>");
+			$("td").last().on("click", {value: data.results[i].url}, function(e){
+				if(e.target !== e.currentTarget)
+					return; 
+				getPokemonDetails(e.data.value);
+			});
+			$("td img").last().on("click",{value: data.results[i]}, function(e){addToMyPokemon(e.data.value);});
 		}
 	});
 }
@@ -53,11 +59,17 @@ function getPokemonId(url){
 }
 
 function getPokemonDetails(url){
-	$("#pokemon_list").slideUp();
+	for(var i=0; i<$("dd:not(:has(ul))").length; i++){
+		 $("dd:not(:has(ul))")[i].innerText = "";
+	}
+	for(var i=0; i<$("dd > ul").length; i++){
+		 $("dd > ul")[i].innerText = "";
+	}
 	$("#pokemon_details").slideDown();
-	$
+	$("#pokemon_list").hide();
+	$("#my_pokemon").hide();
+	
 	$.get(url).done( function(data){
-		console.log(data);
 		$("#id").text(data.id);
 		$("#name").text(firstLetterUpper(data.name));
 		$("#height").text(data.height);
@@ -83,11 +95,51 @@ function getPokemonDetails(url){
 	});
 }
 
+// adding click event on navigation list elements
 function changeActive(){
 	$('.nav a').click(function(e) {
+		//changing active style to the element that is clicked
 		$("ul").find(".active").removeClass("active");
 		$(this).parent().addClass("active");
+		//hide all divs with data
+		$(".container").children().hide();
+		//reads href attribute of given <a> element
+		//and finds element with that id and slide it down
+		$($(this).attr("href")).slideDown();
+	});
+	
+	$( window ).ready(function() {
+		$("body").css("padding-top", $("nav").height());
+	});
+	$( window ).resize(function() {
+		$("body").css("padding-top", $("nav").height());
 	});
 }
 
+function addToMyPokemon(pokemon){
+	var cells= $("#my_pokemons td:has(img)");
+	for(var i=0; i<cells.length; i++){
+		if(cells[i].innerText == firstLetterUpper(pokemon.name)){
+			$(".alert").hide();
+			$($("h1").first()).after("<div class='alert alert-danger'>You have already caught that pokemon</div>");
+			return;
+		}
+	}
+	
+	$("#my_pokemons").append("<tr> <td> "+ getPokemonId(pokemon.url) +
+	" </td> <td>" + firstLetterUpper(pokemon.name) + "<img src='img/pokeball-open.png' alt='pokeball open' ></td>");
+	$("td").last().on("click", {value: pokemon.url}, function(e){
+		if(e.target !== e.currentTarget)
+			return; 
+		getPokemonDetails(e.data.value);
+	});
+	$("td img").last().on("click", {value: pokemon.name}, function(e){removeMyPokemon($($(this).parent()).parent(), e.data.value);});
+	$(".alert").hide();
+	$($("h1").first()).after("<div class='alert alert-success'>You have caught "+ firstLetterUpper(pokemon.name) +"!</div>");
+}
 
+function removeMyPokemon(row, name){
+	row.remove();
+	$(".alert").hide();
+	$($("h1").last()).after("<div class='alert alert-success'>You have released " + firstLetterUpper(name) + " </div>");
+}
